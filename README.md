@@ -3,7 +3,7 @@
 </h1>
 
 # Boring Man Maps Optimizer
-An utility tool to optimize maps from the game Boring Man - OTSC.
+Tool to optimize maps from the game Boring Man - OTSC.
 
 ## Why?
 Because people are too lazy to optimize maps manually (*me included*) and they generally don't use the wall tool right from the start.
