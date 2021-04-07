@@ -12,7 +12,13 @@ def get_lines(filepath: str) -> list[str]:
 def string_to_json(string: str) -> dict:
     _json = json.loads(string)
     return _json
+
+
+def get_bmap_measures(bmap: dict) -> (int, int):
+    config = bmap['Config']
+    return int(config['MapWidth']), int(config['MapHeight'])
 if __name__ == '__main__':
     path = sys.argv[1]
     original_lines = get_lines(path)
     bmap_json = string_to_json(original_lines[MAP_OBJECTS_INDEX])
+    _map_width, _map_height = get_bmap_measures(bmap_json)
