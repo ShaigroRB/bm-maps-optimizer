@@ -17,8 +17,23 @@ def string_to_json(string: str) -> dict:
 def get_bmap_measures(bmap: dict) -> (int, int):
     config = bmap['Config']
     return int(config['MapWidth']), int(config['MapHeight'])
+
+
+def get_blocks_and_others(bmap: dict) -> (list[dict], list[dict]):
+    blocks_list = []
+    others_list = []
+
+    for key, obj in bmap.items():
+        if (key != 'Config') \
+                and ((obj['Name'] in BLOCKS) or (obj['Name'] == WALL_TOOL)):
+            blocks_list.append(obj)
+        else:
+            others_list.append(obj)
+
+    return blocks_list, others_list
 if __name__ == '__main__':
     path = sys.argv[1]
     original_lines = get_lines(path)
     bmap_json = string_to_json(original_lines[MAP_OBJECTS_INDEX])
     _map_width, _map_height = get_bmap_measures(bmap_json)
+    blocks_to_optimize, objects_to_keep = get_blocks_and_others(bmap_json)
