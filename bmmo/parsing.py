@@ -1,4 +1,4 @@
-from constants import WALL_TOOL, BLOCKS
+from bmmo.constants import WALL_TOOL, BLOCKS
 
 
 def get_bmap_measures(bmap: dict) -> (int, int):

@@ -1,7 +1,15 @@
 import sys
 import json
-from constants import MAP_OBJECTS_INDEX, BLOCK_SIZE
+from bmmo.constants import MAP_OBJECTS_INDEX, BLOCK_SIZE
 from parsing import get_bmap_measures, get_blocks_and_others, from_blocks_to_table
+
+
+class Block:
+    def __init__(self, x: int, y: int, width: int, height: int):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
 
 
 def get_lines(filepath: str) -> list[str]:
@@ -18,6 +26,10 @@ def string_to_json(string: str) -> dict:
 def print_table(table: list[list[int]]):
     for row in table:
         print(row)
+
+
+def optimize_table(table: list[list[int]]) -> list[Block]:
+    pass
 
 
 if __name__ == '__main__':
