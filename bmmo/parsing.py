@@ -51,7 +51,7 @@ def _get_coordinates_and_sizes(
     return int(x), int(y), block_info['width'], block_info['height']
 
 
-def from_blocks_to_table(
+def from_blocks_to_list_of_blocks_table(
         map_width: int,
         map_height: int,
         blocks_list: list[dict],
@@ -67,7 +67,7 @@ def from_blocks_to_table(
     :param wall_name: name of the wall tool
     :param blocks_info: list of the different blocks information
     :param block_size: used to scale the sizes and coordinates, advised to use if blocks are snapped to the map grid
-    :return: A table of 0 and 1. 1 means the presence of a block.
+    :return: A list of BlocksTable. The table is composed of 0 & 1. 1 represents the presence of a block.
     """
     scaled_map_width = int(map_width / block_size)
     scaled_map_height = int(map_height / block_size)
