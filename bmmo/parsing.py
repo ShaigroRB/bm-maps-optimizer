@@ -2,11 +2,22 @@ from bmmo.constants import WALL_TOOL, BLOCKS
 
 
 def get_bmap_measures(bmap: dict) -> (int, int):
+    """
+    Given a bmap, get the width and height of the map
+    :param bmap: The bmap
+    :return: width, height
+    """
     config = bmap['Config']
     return int(config['MapWidth']), int(config['MapHeight'])
 
 
 def get_blocks_and_others(bmap: dict) -> (list[dict], list[dict]):
+    """
+    Given a bmap, separate the blocks/walls and all other objects
+    :param bmap: The bmap
+    :param blocks_names: List of names for the blocks to search for
+    :return: a list of blocks/walls, a list of all other objects
+    """
     blocks_list = []
     others_list = []
 
