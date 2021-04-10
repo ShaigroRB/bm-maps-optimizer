@@ -1,7 +1,7 @@
 import sys
 import json
-from bmmo.constants import MAP_OBJECTS_INDEX, BLOCK_SIZE
-from parsing import get_bmap_measures, get_blocks_and_others, from_blocks_to_table
+from bmmo.constants import MAP_OBJECTS_INDEX, BLOCK_SIZE, BLOCKS_AND_WALL_NAMES
+from parsing import get_bmap_measures, separate_blocks_from_other_objects, from_blocks_to_table
 
 
 class Block:
@@ -37,6 +37,6 @@ if __name__ == '__main__':
     original_lines = get_lines(path)
     bmap_json = string_to_json(original_lines[MAP_OBJECTS_INDEX])
     _map_width, _map_height = get_bmap_measures(bmap_json)
-    blocks_to_optimize, objects_to_keep = get_blocks_and_others(bmap_json)
+    blocks_to_optimize, objects_to_keep = separate_blocks_from_other_objects(bmap_json, BLOCKS_AND_WALL_NAMES)
     table = from_blocks_to_table(_map_width, _map_height, blocks_to_optimize, BLOCK_SIZE)
     print_table(table)
