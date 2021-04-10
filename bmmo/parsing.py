@@ -51,6 +51,17 @@ def _get_coordinates_and_sizes(
     return int(x), int(y), block_info['width'], block_info['height']
 
 
+def _get_index_blocks_table_based_on_type_sound(list: list[BlocksTable], block: dict) -> int:
+    index = -1
+
+    for i, blocks_table in list:
+        if (blocks_table.type == block['ObjType']) and (blocks_table.sound == block['ObjSound']):
+            index = i
+            break
+
+    return index
+
+
 def from_blocks_to_list_of_blocks_table(
         map_width: int,
         map_height: int,
@@ -73,7 +84,7 @@ def from_blocks_to_list_of_blocks_table(
     scaled_map_height = int(map_height / block_size)
     table = _create_table(scaled_map_width, scaled_map_height)
 
-    list_of_blocks_table = [BlocksTable('0', '0', table)]
+    list_of_blocks_table = []
 
     def check_coordinates(x: int, y: int):
         return (0 <= x < scaled_map_width) and (0 <= y < scaled_map_height)
@@ -96,7 +107,12 @@ def from_blocks_to_list_of_blocks_table(
                     blocks_table[j][i] = 1
 
     for block in blocks_list:
+        index = _get_index_blocks_table_based_on_type_sound(list_of_blocks_table, block)
+        if index == -1:
+            index = len(list_of_blocks_table)
+            list_of_blocks_table.append(BlocksTable(block['ObjType'], block['ObjSound'], list(table)))
+
         x, y, width, height = _get_coordinates_and_sizes(block, wall_name, blocks_info)
-        update_blocks_table(x, y, width, height, list_of_blocks_table[0])
+        update_blocks_table(x, y, width, height, list_of_blocks_table[index])
 
     return list_of_blocks_table
