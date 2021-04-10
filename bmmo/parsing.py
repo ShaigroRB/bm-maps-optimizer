@@ -1,6 +1,3 @@
-from bmmo.constants import WALL_TOOL, BLOCKS
-
-
 def get_bmap_measures(bmap: dict) -> (int, int):
     """
     Given a bmap, get the width and height of the map
@@ -38,22 +35,34 @@ def _create_table(width: int, height: int) -> list[list[int]]:
     return columns
 
 
-def _get_coordinates_and_sizes(block: dict) -> (int, int, int, int):
+def _get_coordinates_and_sizes(
+        block: dict,
+        wall_name: str,
+        blocks_info: dict[str, dict[str, int]]
+) -> (int, int, int, int):
     x, y = block['X'], block['Y']
-    if block['Name'] == WALL_TOOL:
+    if block['Name'] == wall_name:
         return int(x), int(y), int(block['ObjWallWidth']), int(block['ObjWallHeight'])
 
-    block_info = BLOCKS[block['Name']]
+    block_info = blocks_info[block['Name']]
     return int(x), int(y), block_info['width'], block_info['height']
 
 
-def from_blocks_to_table(map_width: int, map_height: int, blocks_list: list[dict], block_size: int = 1) \
-        -> list[list[int]]:
+def from_blocks_to_table(
+        map_width: int,
+        map_height: int,
+        blocks_list: list[dict],
+        wall_name: str,
+        blocks_info: dict[str, dict[str, int]],
+        block_size: int = 1
+) -> list[list[int]]:
     """
     Given a list of blocks, it returns a table of 0 and 1
     :param map_width: width of the map, blocks outside of the given width will not be in the table
     :param map_height: height of the map, blocks outside of the given height will not be in the table
     :param blocks_list: blocks to put in the table
+    :param wall_name: name of the wall tool
+    :param blocks_info: list of the different blocks information
     :param block_size: used to scale the sizes and coordinates, advised to use if blocks are snapped to the map grid
     :return: A table of 0 and 1. 1 means the presence of a block.
     """
@@ -82,7 +91,7 @@ def from_blocks_to_table(map_width: int, map_height: int, blocks_list: list[dict
                     table[j][i] = 1
 
     for block in blocks_list:
-        x, y, width, height = _get_coordinates_and_sizes(block)
+        x, y, width, height = _get_coordinates_and_sizes(block, wall_name, blocks_info)
         update_table(x, y, width, height)
 
     return table
