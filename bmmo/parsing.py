@@ -8,18 +8,18 @@ def get_bmap_measures(bmap: dict) -> (int, int):
     return int(config['MapWidth']), int(config['MapHeight'])
 
 
-def separate_blocks_from_other_objects(bmap: dict, blocks_names: list[str]) -> (list[dict], list[dict]):
+def separate_objects_from_other_objects(bmap: dict, objs_to_separate_names: list[str]) -> (list[dict], list[dict]):
     """
     Given a bmap, separate the blocks/walls and all other objects
     :param bmap: The bmap
-    :param blocks_names: List of names for the blocks to search for
+    :param objs_to_separate_names: List of names for the objects to search for
     :return: a list of blocks/walls, a list of all other objects
     """
     blocks_list = []
     others_list = []
 
     for key, obj in bmap.items():
-        if (key != 'Config') and (obj['Name'] in blocks_names):
+        if (key != 'Config') and (obj['Name'] in objs_to_separate_names):
             blocks_list.append(obj)
         else:
             others_list.append(obj)
