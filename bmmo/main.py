@@ -38,5 +38,5 @@ if __name__ == '__main__':
     bmap_json = string_to_json(original_lines[MAP_OBJECTS_INDEX])
     _map_width, _map_height = get_bmap_measures(bmap_json)
     blocks_to_optimize, objects_to_keep = separate_objects_from_other_objects(bmap_json, BLOCKS_AND_WALL_NAMES)
-    table = from_blocks_to_table(_map_width, _map_height, blocks_to_optimize, WALL_TOOL, BLOCKS, BLOCK_SIZE)
-    print_table(table)
+    list_of_blocks_table = from_blocks_to_table(_map_width, _map_height, blocks_to_optimize, WALL_TOOL, BLOCKS, BLOCK_SIZE)
+    print_table(list_of_blocks_table[0].table)

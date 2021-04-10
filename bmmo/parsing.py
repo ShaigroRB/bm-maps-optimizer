@@ -1,3 +1,6 @@
+from bmmo.blocks_table import BlocksTable
+
+
 def get_bmap_measures(bmap: dict) -> (int, int):
     """
     Given a bmap, get the width and height of the map
@@ -55,7 +58,7 @@ def from_blocks_to_table(
         wall_name: str,
         blocks_info: dict[str, dict[str, int]],
         block_size: int = 1
-) -> list[list[int]]:
+) -> list[BlocksTable]:
     """
     Given a list of blocks, it returns a table of 0 and 1
     :param map_width: width of the map, blocks outside of the given width will not be in the table
@@ -70,13 +73,15 @@ def from_blocks_to_table(
     scaled_map_height = int(map_height / block_size)
     table = _create_table(scaled_map_width, scaled_map_height)
 
+    list_of_blocks_table = [BlocksTable('0', '0', table)]
+
     def check_coordinates(x: int, y: int):
         return (0 <= x < scaled_map_width) and (0 <= y < scaled_map_height)
 
     def is_divisible(dividend: int, divisor: int) -> bool:
         return dividend % divisor == 0
 
-    def update_table(x: int, y: int, w: int, h: int):
+    def update_blocks_table(x: int, y: int, w: int, h: int, blocks_table: BlocksTable):
         if not is_divisible(x, block_size) or not is_divisible(y, block_size):
             return
 
@@ -88,10 +93,10 @@ def from_blocks_to_table(
         for j in range(scaled_y, scaled_y + scaled_h):
             for i in range(scaled_x, scaled_x + scaled_w):
                 if check_coordinates(i, j):
-                    table[j][i] = 1
+                    blocks_table[j][i] = 1
 
     for block in blocks_list:
         x, y, width, height = _get_coordinates_and_sizes(block, wall_name, blocks_info)
-        update_table(x, y, width, height)
+        update_blocks_table(x, y, width, height, list_of_blocks_table[0])
 
-    return table
+    return list_of_blocks_table
