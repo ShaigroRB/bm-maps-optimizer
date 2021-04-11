@@ -24,3 +24,4 @@ BLOCKS = {
     }
 }
 WALL_TOOL = 'Wall Tool'
+BLOCKS_AND_WALL_NAMES = ['Block (1x1)', 'Block (2x2)', 'Block (1x4)', 'Block (4x1)', 'Wall Tool']
