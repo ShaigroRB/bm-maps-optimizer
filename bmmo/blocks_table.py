@@ -11,3 +11,6 @@ class BlocksTable():
 
     def __setitem__(self, key: int, value: int):
         self.table[key] = value
+
+    def __repr__(self):
+        return f'Type: {self.type}\n Sound: {self.sound}\n Table: {str(self.table)}\n'
