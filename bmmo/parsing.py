@@ -91,7 +91,7 @@ def from_blocks_to_list_of_blocks_table(
 
     list_of_blocks_table = []
 
-    def check_coordinates(x: int, y: int):
+    def check_coordinates(x: int, y: int) -> bool:
         return (0 <= x < scaled_map_width) and (0 <= y < scaled_map_height)
 
     def update_blocks_table(x: int, y: int, w: int, h: int, blocks_table: BlocksTable):

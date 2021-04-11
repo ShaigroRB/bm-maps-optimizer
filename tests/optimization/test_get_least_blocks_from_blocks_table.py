@@ -42,3 +42,18 @@ def test_table_is_1x1_full_of_1_should_return_block_x_y_0_width_height_1():
     assert block.y == expected_block.y
     assert block.width == expected_block.width
     assert block.height == expected_block.height
+
+
+def test_table_is_2x2_second_row_full_of_1_should_return_block_x_0_y_1_width_2_height_1():
+    blocks_table = BlocksTable('0', '0', [
+        [0, 0],
+        [1, 1]
+    ])
+
+    blocks = get_least_blocks_from_blocks_table(blocks_table)
+    block = blocks[0]
+
+    assert block.x == 0
+    assert block.y == 1
+    assert block.width == 2
+    assert block.height == 1
