@@ -15,7 +15,7 @@ def test_default_1x1_map_width_height_of_128_should_return_blocks_table_of_128x1
     # default block size: 128 * 128
     expected_table = [list(list_of_128_1) for _ in range(128)]
 
-    blocks_tables = from_blocks_to_list_of_blocks_table(128, 128, blocks, 'Wall Tool', BLOCKS)
+    blocks_tables = from_blocks_to_list_of_blocks_table(128, 128, blocks, WALL_TOOL, BLOCKS)
 
     assert len(blocks_tables[0].table) == len(expected_table)
     assert len(blocks_tables[0].table[0]) == len(expected_table[0])
@@ -40,3 +40,29 @@ def test_no_block_should_return_empty_list():
     blocks_table = from_blocks_to_list_of_blocks_table(0, 0, blocks, WALL_TOOL, BLOCKS)
 
     assert len(blocks_table) == 0
+
+
+def test_default_1x1_map_width_height_of_128_with_scale_of_128_should_return_blocks_table_of_1x1():
+    blocks = [
+        {"Y": "0", "LogicID": "3", "Poly": "0", "ObjIsTile": "0", "Depth": "500", "ObjType": "0", "X": "0",
+         "ObjSound": "0", "ID": "4", "Name": "Block (1x1)", "Team": "-1", "ObjIndexID": "0"}
+    ]
+
+    expected_table = [1]
+
+    blocks_table = from_blocks_to_list_of_blocks_table(128, 128, blocks, WALL_TOOL, BLOCKS, 128)
+
+    assert len(blocks_table) == len(expected_table)
+
+
+def test_default_1x1_map_width_height_of_128_with_scale_of_128_should_return_blocks_table_of_1x1_full_of_1():
+    blocks = [
+        {"Y": "0", "LogicID": "3", "Poly": "0", "ObjIsTile": "0", "Depth": "500", "ObjType": "0", "X": "0",
+         "ObjSound": "0", "ID": "4", "Name": "Block (1x1)", "Team": "-1", "ObjIndexID": "0"}
+    ]
+
+    expected_table = [[1]]
+
+    blocks_table = from_blocks_to_list_of_blocks_table(128, 128, blocks, WALL_TOOL, BLOCKS, 128)
+
+    assert blocks_table[0].table == expected_table
