@@ -1,5 +1,5 @@
 from bmmo.blocks_table import BlocksTable
-
+import copy
 
 def get_bmap_measures(bmap: dict) -> (int, int):
     """
@@ -51,10 +51,10 @@ def _get_coordinates_and_sizes(
     return int(x), int(y), block_info['width'], block_info['height']
 
 
-def _get_index_blocks_table_based_on_type_sound(list: list[BlocksTable], block: dict) -> int:
+def _get_index_blocks_table_based_on_type_sound(list_of_blocks_table: list[BlocksTable], block: dict) -> int:
     index = -1
 
-    for i, blocks_table in list:
+    for i, blocks_table in enumerate(list_of_blocks_table):
         if (blocks_table.type == block['ObjType']) and (blocks_table.sound == block['ObjSound']):
             index = i
             break
@@ -110,7 +110,7 @@ def from_blocks_to_list_of_blocks_table(
         index = _get_index_blocks_table_based_on_type_sound(list_of_blocks_table, block)
         if index == -1:
             index = len(list_of_blocks_table)
-            list_of_blocks_table.append(BlocksTable(block['ObjType'], block['ObjSound'], list(table)))
+            list_of_blocks_table.append(BlocksTable(block['ObjType'], block['ObjSound'], copy.deepcopy(table)))
 
         x, y, width, height = _get_coordinates_and_sizes(block, wall_name, blocks_info)
         update_blocks_table(x, y, width, height, list_of_blocks_table[index])
