@@ -1,6 +1,7 @@
 from bmmo.blocks_table import BlocksTable
 import copy
 
+
 def get_bmap_measures(bmap: dict) -> (int, int):
     """
     Given a bmap, get the width and height of the map
@@ -62,6 +63,10 @@ def _get_index_blocks_table_based_on_type_sound(list_of_blocks_table: list[Block
     return index
 
 
+def _is_divisible(dividend: int, divisor: int) -> bool:
+    return dividend % divisor == 0
+
+
 def from_blocks_to_list_of_blocks_table(
         map_width: int,
         map_height: int,
@@ -89,30 +94,38 @@ def from_blocks_to_list_of_blocks_table(
     def check_coordinates(x: int, y: int):
         return (0 <= x < scaled_map_width) and (0 <= y < scaled_map_height)
 
-    def is_divisible(dividend: int, divisor: int) -> bool:
-        return dividend % divisor == 0
-
     def update_blocks_table(x: int, y: int, w: int, h: int, blocks_table: BlocksTable):
-        if not is_divisible(x, block_size) or not is_divisible(y, block_size):
-            return
-
-        scaled_w = int(w / block_size)
-        scaled_h = int(h / block_size)
         scaled_x = int(x / block_size)
         scaled_y = int(y / block_size)
+        scaled_w = int(w / block_size)
+        scaled_h = int(h / block_size)
 
         for j in range(scaled_y, scaled_y + scaled_h):
             for i in range(scaled_x, scaled_x + scaled_w):
                 if check_coordinates(i, j):
                     blocks_table[j][i] = 1
 
+    def are_coordinates_usable(x: int, y: int) -> bool:
+        are_usable = True
+        if not _is_divisible(x, block_size) or not _is_divisible(y, block_size):
+            are_usable = False
+        if are_usable:
+            scaled_x = int(x / block_size)
+            scaled_y = int(y / block_size)
+            if not check_coordinates(scaled_x, scaled_y):
+                are_usable = False
+        return are_usable
+
     for block in blocks_list:
+        x, y, width, height = _get_coordinates_and_sizes(block, wall_name, blocks_info)
+        if not are_coordinates_usable(x, y):
+            continue
+
         index = _get_index_blocks_table_based_on_type_sound(list_of_blocks_table, block)
         if index == -1:
             index = len(list_of_blocks_table)
             list_of_blocks_table.append(BlocksTable(block['ObjType'], block['ObjSound'], copy.deepcopy(table)))
 
-        x, y, width, height = _get_coordinates_and_sizes(block, wall_name, blocks_info)
         update_blocks_table(x, y, width, height, list_of_blocks_table[index])
 
     return list_of_blocks_table
