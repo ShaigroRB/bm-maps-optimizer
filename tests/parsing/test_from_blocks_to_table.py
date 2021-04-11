@@ -143,3 +143,25 @@ def test_two_blocks_with_different_types_width_height_256_with_scale_of_128_shou
 
     assert list_of_blocks_table[0].table == first_expected_table
     assert list_of_blocks_table[1].table == second_expected_table
+
+
+def test_block_coordinates_256_256_width_height_128_should_return_empty_list():
+    blocks = [
+        {"Y": "256", "LogicID": "3", "Poly": "0", "ObjIsTile": "0", "Depth": "500", "ObjType": "0", "X": "256",
+         "ObjSound": "0", "ID": "4", "Name": "Block (1x1)", "Team": "-1", "ObjIndexID": "0"}
+    ]
+
+    list_of_blocks_table = from_blocks_to_list_of_blocks_table(128, 128, blocks, WALL_TOOL, BLOCKS)
+
+    assert len(list_of_blocks_table) == 0
+
+
+def test_block_coordinates_255_255_width_height_256_scale_128_should_return_empty_list():
+    blocks = [
+        {"Y": "255", "LogicID": "3", "Poly": "0", "ObjIsTile": "0", "Depth": "500", "ObjType": "0", "X": "255",
+         "ObjSound": "0", "ID": "4", "Name": "Block (1x1)", "Team": "-1", "ObjIndexID": "0"}
+    ]
+
+    list_of_blocks_table = from_blocks_to_list_of_blocks_table(256, 256, blocks, WALL_TOOL, BLOCKS, 128)
+
+    assert len(list_of_blocks_table) == 0
