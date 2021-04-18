@@ -39,6 +39,12 @@ def _remove_block_from_table(block: Block, table: list[list[int]]):
 # Finally, we repeat the process.
 # Technically speaking, it doesn't get the least blocks possible. But in our use case, it's good enough.
 def get_least_blocks_from_blocks_table(blocks_table: BlocksTable) -> list[Block]:
+    """
+    Get least blocks from a BlocksTable.
+    :param blocks_table: a BlocksTable
+    :return: a list of Block
+    """
+
     block_type = blocks_table.type
     block_sound = blocks_table.sound
     nb_rows = len(blocks_table.table)
