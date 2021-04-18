@@ -99,3 +99,73 @@ def test_table_is_4x4_continuous_row_of_1_should_return_3_blocks_of_different_co
     assert block3.y == 3
     assert block3.width == 2
     assert block3.height == 1
+
+
+def test_table_is_4x4_no_1_should_return_list_of_length_0():
+    blocks_table = BlocksTable('0', '0', [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ])
+
+    blocks = get_least_blocks_from_blocks_table(blocks_table)
+
+    assert len(blocks) == 0
+
+
+def test_table_is_6x6_hole_in_the_1_should_return_list_of_length_5():
+    blocks_table = BlocksTable('0', '0', [
+        [1, 1, 1, 1, 0, 0],
+        [1, 1, 1, 1, 1, 0],
+        [1, 1, 1, 1, 1, 0],
+        [1, 1, 0, 0, 1, 0],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1]
+    ])
+
+    blocks = get_least_blocks_from_blocks_table(blocks_table)
+
+    assert len(blocks) == 5
+
+def test_table_is_6x6_hole_in_the_1_should_return_5_blocks_of_different_coordinates_and_sizes():
+    blocks_table = BlocksTable('0', '0', [
+        [1, 1, 1, 1, 0, 0],
+        [1, 1, 1, 1, 1, 0],
+        [1, 1, 1, 1, 1, 0],
+        [1, 1, 0, 0, 1, 0],
+        [1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1]
+    ])
+
+    blocks = get_least_blocks_from_blocks_table(blocks_table)
+    top_left_block = blocks[0]
+    vertical_line = blocks[1]
+    bottom_left_block = blocks[2]
+    mid_bottom_block = blocks[3]
+    small_vertical_line = blocks[4]
+
+    assert top_left_block.x == 0
+    assert top_left_block.y == 0
+    assert top_left_block.width == 4
+    assert top_left_block.height == 3
+
+    assert vertical_line.x == 4
+    assert vertical_line.y == 1
+    assert vertical_line.width == 1
+    assert vertical_line.height == 5
+
+    assert bottom_left_block.x == 0
+    assert bottom_left_block.y == 3
+    assert bottom_left_block.width == 2
+    assert bottom_left_block.height == 3
+
+    assert mid_bottom_block.x == 2
+    assert mid_bottom_block.y == 4
+    assert  mid_bottom_block.width == 2
+    assert mid_bottom_block.height == 2
+
+    assert small_vertical_line.x == 5
+    assert small_vertical_line.y == 4
+    assert small_vertical_line.width == 1
+    assert small_vertical_line.height == 2

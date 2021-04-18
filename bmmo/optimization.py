@@ -37,6 +37,7 @@ def _remove_block_from_table(block: Block, table: list[list[int]]):
 # a block with the new width and height.
 # Now, we can remove the newly created block from the given table of blocks.
 # Finally, we repeat the process.
+# Technically speaking, it doesn't get the least blocks possible. But in our use case, it's good enough.
 def get_least_blocks_from_blocks_table(blocks_table: BlocksTable) -> list[Block]:
     block_type = blocks_table.type
     block_sound = blocks_table.sound
@@ -49,6 +50,7 @@ def get_least_blocks_from_blocks_table(blocks_table: BlocksTable) -> list[Block]
     def create_block(x: int, y: int, w: int, h: int) -> Block:
         return Block(x, y, w, h, block_type, block_sound)
 
+    # for a more modular algorithm, add the find coordinates as a function given as parameter
     top_left_cell_x, top_left_cell_y = _find_coordinates_of_most_top_left_valid_cell(optimized_table)
     index_row, index_col = top_left_cell_y, top_left_cell_x + 1
 
