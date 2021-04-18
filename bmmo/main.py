@@ -4,14 +4,6 @@ from bmmo.constants import MAP_OBJECTS_INDEX, BLOCK_SIZE, BLOCKS_AND_WALL_NAMES,
 from bmmo.parsing import get_bmap_measures, separate_objects_from_other_objects, from_blocks_to_list_of_blocks_table
 
 
-class Block:
-    def __init__(self, x: int, y: int, width: int, height: int):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-
-
 def get_lines(filepath: str) -> list[str]:
     with open(filepath, 'r') as file:
         lines = [line.rstrip() for line in file]
