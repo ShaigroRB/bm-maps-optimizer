@@ -19,15 +19,22 @@ Because people are too lazy to optimize maps manually (*me included*) and they g
   - [ ] Optimize ladders
 
 ### Parsing, Optimization & Creation of the new map
-- [ ] Parse the file
+- [x] Parse the file
   1. [x] Read objects one by one
-  2. [ ] For blocks and walls, put them in a table of blocks
+  2. x ] For blocks and walls, put them in a table of blocks
      1. [x] Handle simple blocks (no type, no ambience)
-     2. [ ] Handle block types
-     3. [ ] Handle block ambiences
+     2. [x] Handle block types
+     3. [x] Handle block ambiences
   3. [x] Keep any other object somewhere
   4. [x] Create a table from a list of blocks
 - [ ] Optimization algorithm: Given a set of rectangles, find the fewest rectangles to cover them without overlapping
   - [ ] All walls of 1x1, 2x2, 4x1, 1x4 can be replaced by blocks of those sizes
 - [ ] Optimization of the ladders
 - [ ] Create a new file with the optimized blocks
+
+## How to run this project?
+1. Download the project
+2. `cd bm-map-optimizer/`
+3. `python -m venv new_env`
+4. `python -m pip install -e .`
+5. `python -m bmmo.main bmap.txt`
