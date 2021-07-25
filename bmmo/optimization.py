@@ -8,10 +8,16 @@ def _is_cell_valid(cell: int) -> bool:
 
 
 def _find_coordinates_of_most_top_left_valid_cell(table: list[list[int]]) -> (int, int):
-    for j, row in enumerate(table):
-        for i, column in enumerate(row):
-            if _is_cell_valid(column):
+    row_length = len(table)
+    column_length = 0
+    if row_length > 0:
+        column_length = len(table[0])
+
+    for i in range(column_length):
+        for j in range(row_length):
+            if _is_cell_valid(table[j][i]):
                 return i, j
+
     return -1, -1
 
 
