@@ -4,24 +4,38 @@
   <meta charset="utf-8" />
   <script type="text/javascript" src="./libs/brython.min.js"></script>
   <script type="text/javascript" src="./libs/brython_stdlib.js"></script>
+  <script type="text/javascript">
+    function downloadText() {
+      // Get the content of the textarea
+      const text = document.getElementById('map_content').value;
+      // Create a Blob object with the text
+      const blob = new Blob([text], { type: 'text/plain' });
+      // Create a link element
+      const link = document.createElement('a');
+      // Set the download attribute with the filename
+      link.download = 'bmap.txt';
+      // Create an object URL for the Blob
+      link.href = URL.createObjectURL(blob);
+      // Append the link to the body
+      document.body.appendChild(link);
+      // Programmatically click the link to trigger the download
+      link.click();
+      // Remove the link from the document
+      document.body.removeChild(link);
+    }
+  </script>
 </head>
 
 <body>
 
-  <!-- <script type="text/python" src="./main.py"></script> -->
-
-  <script type="text/python">
-    import hello
-    # from fruits import apple
-    import bmmo.apple
-
-    print(hello.hello())
-    print(apple.hello())
-  </script>
+  <script type="text/python" src="./main.py"></script>
 
   <div>
     <input type="file" id="input_load_file"></input>
-    <button id="btn_save_file">Optimize and save file</button>
+    <button id="btn_optimize">Optimize</button>
+
+    <button id="btn_save_file" onclick="downloadText()">Save file</button>
+    <textarea id="map_content" />
   </div>
 </body>
 
