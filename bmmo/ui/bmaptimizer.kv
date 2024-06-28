@@ -1,0 +1,179 @@
+#:kivy 2.0.0
+
+#:set black '#151515'
+#:set grey '#B4A5A5'
+#:set purple '#301B3F'
+#:set blue '#3C415C'
+
+## Styled components
+<BackgroundColor@Widget>
+    canvas.before:
+        Color:
+            rgba: (21/255, 21/255, 21/255, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+# Now you can simply Mix the `BackgroundColor` class with almost
+# any other widget... to give it a background.
+<H1Label@Label+BackgroundColor>
+    color: grey
+    bold: True
+    font_size: 23
+    text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+
+<BackgroundGrid@GridLayout+BackgroundColor>
+
+<FileChooserGrid@GridLayout>
+    spacing: 5
+
+<ChooseFileButton@Button>
+    color: grey
+    # remove the default grey bg color of the button
+    background_normal: ''
+    background_color: (60/255, 65/255, 92/255, 1)
+    font_size: 18
+    text: 'Choose file'
+
+<GreyInput@TextInput>
+    background_normal: ''
+    background_color: grey
+    foreground_color: purple
+    font_size: 18
+    readonly: True
+    halign: 'left'
+    valign: 'middle'
+    multiline: False
+    text: '/random/path/to/bmap.txt'
+
+<PurpleCheckbox@CheckBox+BackgroundColor>
+    background_checkbox_normal: 'assets/checkbox_not_active.png'
+    background_checkbox_down: 'assets/checkbox_active.png'
+
+<CheckboxLabel@H1Label>
+    font_size: 18
+    bold: False
+
+<NumerotationWidget@Widget>
+    # this allows overriding of the text property
+    text: 'I'
+
+    canvas:
+        Color:
+            rgba: (180/255, 165/255, 165/255, 1)
+        # dot
+        Ellipse:
+            pos: self.center_x - 90, self.center_y - 50
+            size: 80, 80
+        # horizontal line
+        Line:
+            points: [self.center_x + 10, self.center_y - 10, self.center_x + 50, self.center_y - 10]
+            width: 1.5
+        # vertical line
+        Line:
+            points: [self.center_x + 50, self.center_y + 30, self.center_x + 50, self.center_y - 50]
+            width: 1.5
+
+    Label:
+        pos: (7, root.y + 3)
+        color: black
+        font_size: 22
+        bold: True
+        # use the text defined at the root of NumerotationWidget
+        text: root.text
+
+# Menu screen with all the options
+<MenuScreen>:
+    BackgroundGrid:
+        size: root.size
+        cols: 2
+        padding: [15, 0, 15, 15]
+
+        GridLayout:
+            rows: 3
+            size_hint_x: 2
+
+            NumerotationWidget:
+            NumerotationWidget:
+                text: 'II'
+            NumerotationWidget:
+                text: 'III'
+
+        GridLayout:
+            rows: 3
+            size_hint_x: 4
+
+            # Input file
+            GridLayout:
+                rows: 2
+                padding: [0, 15]
+
+                H1Label:
+                    text: 'Choose the bmap to optimize'
+                    size_hint_y: 3
+
+                FileChooserGrid:
+                    cols: 2
+                    size_hint_y: 2
+
+                    GreyInput:
+                        id: input_file_to_optimize
+                        size_hint_x: 2
+
+                    ChooseFileButton:
+                        size_hint_x: 1
+
+            # What to optimize
+            GridLayout:
+                rows: 2
+                padding: [0, 15]
+
+                H1Label:
+                    text: 'Choose what to optimize'
+                    size_hint_y: 3
+
+                GridLayout:
+                    cols: 2
+                    size_hint_y: 2
+
+                    GridLayout:
+                        cols: 2
+
+                        PurpleCheckbox:
+                            active: True
+
+                        CheckboxLabel:
+                            text: 'Blocks'
+                            size_hint_x: 3
+
+                    GridLayout:
+                        cols: 2
+
+                        PurpleCheckbox:
+                            active: False
+
+                        CheckboxLabel:
+                            text: 'Ladders (in dev)'
+                            size_hint_x: 3
+
+            # Output file
+            GridLayout:
+                rows: 2
+                padding: [0, 15]
+
+                H1Label:
+                    text: 'Choose where to save'
+                    size_hint_y: 3
+
+                FileChooserGrid:
+                    cols: 2
+                    size_hint_y: 2
+
+                    GreyInput:
+                        id: input_output_file
+                        size_hint_x: 2
+
+                    ChooseFileButton:
+                        size_hint_x: 1
