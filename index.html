@@ -1,0 +1,28 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <script type="text/javascript" src="./libs/brython.min.js"></script>
+  <script type="text/javascript" src="./libs/brython_stdlib.js"></script>
+</head>
+
+<body>
+
+  <!-- <script type="text/python" src="./main.py"></script> -->
+
+  <script type="text/python">
+    import hello
+    # from fruits import apple
+    import bmmo.apple
+
+    print(hello.hello())
+    print(apple.hello())
+  </script>
+
+  <div>
+    <input type="file" id="input_load_file"></input>
+    <button id="btn_save_file">Optimize and save file</button>
+  </div>
+</body>
+
+</html>
