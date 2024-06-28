@@ -50,8 +50,17 @@ def merge_map_objects_to_string(blocks: list[Block], scale: int, others: list) -
         block_id = last_index + index
         bmap[f"OBJ{block_id}"] = create_object_from_block(block, block_id)
 
-    final_string = json.dumps(bmap)
-    return final_string
+    has_crashed = False
+    try:
+        final_string = json.dumps(bmap)
+    except:
+        has_crashed = True
+        print('fail to serialize via "json.dumps"')
+
+    if not has_crashed:
+        return final_string, has_crashed
+    else:
+        return bmap, has_crashed
 
 
 def optimize(og_lines: list[str]):
@@ -83,17 +92,26 @@ def optimize(og_lines: list[str]):
     # log some information about the optimization
     len_original = len(blocks_to_optimize)
     len_optimized = len(list_of_blocks)
+    compression_ratio = int((1 - (len_optimized / len_original)) * 100)
     print(f"Before: {len_original}, After: {len_optimized}")
-    print(f"Compression ratio: {int((1 - (len_optimized / len_original)) * 100)}%")
+    print(f"Compression ratio: {compression_ratio}%")
     if not (len_optimized < len_original):
+        print("No optimization to be made")
         return
 
     # create a list of lines representing a new optimized bmap.txt
-    optimized_objects_string = merge_map_objects_to_string(list_of_blocks, BLOCK_SIZE, objects_to_keep)
+    optimized_objects_string, has_crashed = merge_map_objects_to_string(list_of_blocks, BLOCK_SIZE, objects_to_keep)
+
+    stats = {
+        "before": len_original,
+        "after": len_optimized,
+        "ratio": compression_ratio,
+        "has_crashed": has_crashed,
+    }
 
     optimized_lines = []
     for line in original_lines[0:MAP_OBJECTS_INDEX]:
         optimized_lines.append(line)
     optimized_lines.append(optimized_objects_string)
     optimized_lines.append(original_lines[MAP_OBJECTS_INDEX + 1])
-    return optimized_lines
+    return optimized_lines, stats

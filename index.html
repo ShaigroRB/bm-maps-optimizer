@@ -5,6 +5,9 @@
   <script type="text/javascript" src="./libs/brython.min.js"></script>
   <script type="text/javascript" src="./libs/brython_stdlib.js"></script>
   <script type="text/javascript">
+    function JSONdumps(data) {
+      return JSON.stringify(data)
+    }
     function downloadText() {
       // Get the content of the textarea
       const text = document.getElementById('map_content').value;
@@ -35,7 +38,12 @@
     <button id="btn_optimize">Optimize</button>
 
     <button id="btn_save_file" onclick="downloadText()">Save file</button>
-    <textarea id="map_content" />
+    <textarea id="map_content"/></textarea>
+  </div>
+  <div>
+    <h2>Stats:</h2>
+    <p>Before: <span id="before"></span> After: <span id="after"></span></p>
+    <p>Compression ratio: <span id="ratio"></span>%</p>
   </div>
 </body>
 

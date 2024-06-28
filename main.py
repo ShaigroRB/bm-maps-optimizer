@@ -3,9 +3,13 @@ from bmmo import main as cli_main
 
 load_btn = document["input_load_file"]
 optimize_btn = document["btn_optimize"]
+s = document["btn_save_file"]
+map_content = document["map_content"]
+span_before = document["before"]
+span_after = document["after"]
+span_ratio = document["ratio"]
 og_lines: list[str] = []
 optimized_lines: list[str] = []
-map_content = document["map_content"]
 
 @bind(load_btn, "input")
 def file_read(ev):
@@ -38,6 +42,14 @@ def mousedown(evt):
       """Create a "data URI" to set the downloaded file content
       Cf. https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
       """
-      optimized_lines = cli_main.optimize(og_lines)
+      optimized_lines, stats = cli_main.optimize(og_lines)
+      if stats['has_crashed']:
+        new_lines = []
+        for line in optimized_lines:
+            new_lines.append(window.JSONdumps(line))
+        optimized_lines = new_lines
       joined_string = "\n".join(optimized_lines)
       map_content.value = joined_string
+      span_before.textContent = stats["before"]
+      span_after.textContent = stats["after"]
+      span_ratio.textContent = stats["ratio"]
