@@ -10,6 +10,10 @@ span_ratio = document["ratio"]
 og_lines: list[str] = []
 optimized_lines: list[str] = []
 
+def clear_og_lines():
+    global og_lines
+    og_lines.clear()
+
 @bind(load_btn, "input")
 def file_read(ev):
     def onload(event):
@@ -17,6 +21,7 @@ def file_read(ev):
         event.target.
         The file content, as text, is the FileReader instance's "result"
         attribute."""
+        clear_og_lines()
         lines = event.target.result.__str__().splitlines()
         # optimized_lines = cli_main.optimize(lines)
         # joined_string = "\n".join(optimized_lines)
