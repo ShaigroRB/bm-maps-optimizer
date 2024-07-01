@@ -1,6 +1,20 @@
 <html>
 
 <head>
+  <style>
+    #loader {
+      display: flex;
+      align-items: center;
+    }
+
+    .hidden {
+      opacity: 0;
+    }
+
+    .displayed {
+      opacity: 1;
+    }
+  </style>
   <meta charset="utf-8" />
   <script type="text/javascript" src="./libs/brython.min.js"></script>
   <script type="text/javascript" src="./libs/brython_stdlib.js"></script>
@@ -35,16 +49,65 @@
 
   <div>
     <input type="file" id="input_load_file"></input>
-    <button id="btn_optimize">Optimize</button>
 
     <button id="btn_save_file" onclick="downloadText()">Save file</button>
-    <textarea id="map_content"/></textarea>
+    <textarea id="map_content" /></textarea>
   </div>
   <div>
     <h2>Stats:</h2>
-    <p>Before: <span id="before"></span> After: <span id="after"></span></p>
-    <p>Compression ratio: <span id="ratio"></span>%</p>
+    <div id="loader" class="hidden">
+      <p>Optimizing map</p>
+      <svg fill="blue" width="48" height="48" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <style>
+          .spinner_S1WN {
+            animation: spinner_MGfb .8s linear infinite;
+            animation-delay: -.8s
+          }
+
+          .spinner_Km9P {
+            animation-delay: -.65s
+          }
+
+          .spinner_JApP {
+            animation-delay: -.5s
+          }
+
+          @keyframes spinner_MGfb {
+
+            93.75%,
+            100% {
+              opacity: .2
+            }
+          }
+        </style>
+        <circle class="spinner_S1WN" cx="4" cy="12" r="3" />
+        <circle class="spinner_S1WN spinner_Km9P" cx="12" cy="12" r="3" />
+        <circle class="spinner_S1WN spinner_JApP" cx="20" cy="12" r="3" />
+      </svg>
+    </div>
+    <div id="stats">
+      <p>Before: <span id="before"></span> After: <span id="after"></span></p>
+      <p>Compression ratio: <span id="ratio"></span>%</p>
+    </div>
   </div>
+  <script>
+    const loader = document.getElementById('loader')
+    const stats = document.getElementById('stats')
+    /**
+     * @type HTMLInputElement
+     */
+    const input = document.getElementById('input_load_file')
+    input.addEventListener('change', () => {
+      // display loader & hide stats
+      loader.className = 'displayed'
+      stats.className = 'hidden'
+
+      setTimeout(() => {
+        stats.className = 'displayed'
+        loader.className = 'hidden'
+      }, 800);
+    })
+  </script>
 </body>
 
 </html>
