@@ -17,6 +17,15 @@ const optimizedMapCanvas = document.getElementById(
   "optimized_map_canvas"
 ) as HTMLCanvasElement;
 
+optimizedMapCanvas.addEventListener(
+  "mouseenter",
+  () => (optimizedMapCanvas.className = "disappear")
+);
+optimizedMapCanvas.addEventListener(
+  "mouseleave",
+  () => (optimizedMapCanvas.className = "")
+);
+
 let ogLines: string[] = [];
 
 loadMapFile_input.addEventListener("change", async () => {
