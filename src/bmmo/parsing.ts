@@ -35,7 +35,7 @@ function createTable(width: number, height: number): number[][] {
   return columns;
 }
 
-function getCoordinatesAndSizes(
+export function getCoordinatesAndSizes(
   block: Record<string, any>,
   wallName: string,
   blocksInfo: Record<string, Record<string, number>>
