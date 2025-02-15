@@ -1,5 +1,5 @@
 // import "./style.css";
-import { optimize } from "./bmmo/misc";
+import { optimizeAndDraw } from "./drawing/drawing";
 
 const loadMapFile_input = document.getElementById(
   "input_load_file"
@@ -10,23 +10,29 @@ const mapContent = document.getElementById(
 const before_span = document.getElementById("before") as HTMLSpanElement;
 const after_span = document.getElementById("after") as HTMLSpanElement;
 const ratio_span = document.getElementById("ratio") as HTMLSpanElement;
-const optimize_button = document.getElementById(
-  "btn_optimize"
-) as HTMLButtonElement;
+const ogMapCanvas = document.getElementById(
+  "og_map_canvas"
+) as HTMLCanvasElement;
+const optimizedMapCanvas = document.getElementById(
+  "optimized_map_canvas"
+) as HTMLCanvasElement;
 
 let ogLines: string[] = [];
 
 loadMapFile_input.addEventListener("change", async () => {
   const file = loadMapFile_input.files?.[0];
   ogLines = [];
-  if (file) {
-    const content = await file.text();
-    ogLines.push(...content.split("\r\n"));
-  }
-});
 
-optimize_button.addEventListener("click", () => {
-  const [optimizedLines, stats] = optimize(ogLines);
+  if (!file) return;
+
+  const content = await file.text();
+  ogLines.push(...content.split("\r\n"));
+
+  const [optimizedLines, stats] = optimizeAndDraw(
+    ogLines,
+    ogMapCanvas,
+    optimizedMapCanvas
+  );
   if (stats["has_crashed"]) {
     alert(
       "The optimization has crashed! This map is not suitable for optimization."

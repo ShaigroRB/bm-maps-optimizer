@@ -1,30 +1,41 @@
 <!doctype html>
 <html lang="en">
-  <link rel="icon" type="image/svg+xml" href="/assets/horizontal_icon_32x32.png" />
-  <meta charset="utf-8" />
-  <script type="text/javascript">
-    function JSONdumps(data) {
-      return JSON.stringify(data)
-    }
-    function downloadText() {
-      // Get the content of the textarea
-      const text = document.getElementById('map_content').value;
-      // Create a Blob object with the text
-      const blob = new Blob([text], { type: 'text/plain' });
-      // Create a link element
-      const link = document.createElement('a');
-      // Set the download attribute with the filename
-      link.download = 'bmap.txt';
-      // Create an object URL for the Blob
-      link.href = URL.createObjectURL(blob);
-      // Append the link to the body
-      document.body.appendChild(link);
-      // Programmatically click the link to trigger the download
-      link.click();
-      // Remove the link from the document
-      document.body.removeChild(link);
-    }
-  </script>
+<link rel="icon" type="image/svg+xml" href="/assets/horizontal_icon_32x32.png" />
+<meta charset="utf-8" />
+<style>
+  #og_map_canvas {
+    opacity: 0.05;
+    transition: 0.5s;
+  }
+
+  #og_map_canvas:hover {
+    opacity: 1;
+    transition: 0.5s;
+  }
+</style>
+<script type="text/javascript">
+  function JSONdumps(data) {
+    return JSON.stringify(data)
+  }
+  function downloadText() {
+    // Get the content of the textarea
+    const text = document.getElementById('map_content').value;
+    // Create a Blob object with the text
+    const blob = new Blob([text], { type: 'text/plain' });
+    // Create a link element
+    const link = document.createElement('a');
+    // Set the download attribute with the filename
+    link.download = 'bmap.txt';
+    // Create an object URL for the Blob
+    link.href = URL.createObjectURL(blob);
+    // Append the link to the body
+    document.body.appendChild(link);
+    // Programmatically click the link to trigger the download
+    link.click();
+    // Remove the link from the document
+    document.body.removeChild(link);
+  }
+</script>
 </head>
 
 <body>
@@ -32,18 +43,25 @@
 
   <div>
     <input type="file" id="input_load_file"></input>
-    <button id="btn_optimize">Optimize</button>
 
     <button id="btn_save_file" onclick="downloadText()">Save file</button>
-    <textarea id="map_content"/></textarea>
+    <textarea id="map_content" /></textarea>
   </div>
+
   <div>
     <h2>Stats:</h2>
     <p>Before: <span id="before"></span> After: <span id="after"></span></p>
     <p>Compression ratio: <span id="ratio"></span>%</p>
   </div>
 
+  <h2>Hover to see non-optimized map</h2>
+  <div style="position: relative;">
+    <progress id="progress" value="0" max="100">70 %</progress>
+    <canvas id="optimized_map_canvas" style="position: absolute;"></canvas>
+    <canvas id="og_map_canvas" style="position: absolute;"></canvas>
+  </div>
+
   <script type="module" src="/src/main.ts"></script>
 </body>
-</html>
 
+</html>

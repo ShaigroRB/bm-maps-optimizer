@@ -65,6 +65,7 @@ export function mergeMapObjectsToString(
   });
 
   blocks.forEach((block, index) => {
+    // todo: should retrieve the last id used instead of assuming it starts at others.length
     const blockId = others.length + index;
     bmap[`OBJ${blockId}`] = createObjectFromBlock(block, blockId);
   });
