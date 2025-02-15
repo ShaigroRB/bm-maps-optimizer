@@ -3,7 +3,7 @@ import { BlocksTable } from "./blocks_table";
 /** Given a bmap, get the width and height of the map */
 export function getBmapMeasures(bmap: Record<string, any>): [number, number] {
   const config = bmap["Config"];
-  return [parseInt(config["MapWidth"]), parseInt(config["MapHeight"])];
+  return [Number(config["MapWidth"]), Number(config["MapHeight"])];
 }
 
 /** Given a bmap, separate the blocks/walls and all other objects.
@@ -44,15 +44,15 @@ export function getCoordinatesAndSizes(
   const y = block["Y"];
   if (block["Name"] === wallName) {
     return [
-      parseInt(x),
-      parseInt(y),
-      parseInt(block["ObjWallWidth"]),
-      parseInt(block["ObjWallHeight"]),
+      Number(x),
+      Number(y),
+      Number(block["ObjWallWidth"]),
+      Number(block["ObjWallHeight"]),
     ];
   }
 
   const blockInfo = blocksInfo[block["Name"]];
-  return [parseInt(x), parseInt(y), blockInfo["width"], blockInfo["height"]];
+  return [Number(x), Number(y), blockInfo["width"], blockInfo["height"]];
 }
 
 function getIndexBlocksTableBasedOnTypeSound(
