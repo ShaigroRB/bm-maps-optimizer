@@ -17,6 +17,7 @@ function stringToJson(str: string): Record<string, any> {
   return JSON.parse(str);
 }
 
+// @ts-ignore -- Useful for debugging
 function printTable(table: number[][]): void {
   table.forEach((row) => console.log(row.join(" "), "\n"));
 }

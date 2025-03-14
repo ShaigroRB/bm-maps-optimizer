@@ -22,6 +22,7 @@ const DRAWN_BLOCK_SIZE_PX = 20 / SCALE_BLOCK_SIZE;
 
 const progress = document.getElementById("progress") as HTMLProgressElement;
 
+// @ts-ignore -- Useful for debugging
 function printTable(table: number[][]): void {
   let content = "";
   table.forEach((row) => {
