@@ -16,9 +16,9 @@ import { Block } from "../bmmo/block";
 import { mergeMapObjectsToString } from "../bmmo/misc";
 import { COLORS_PER_TYPE } from "./colors";
 
-const SCALE_BLOCK_SIZE = 1;
+const SCALE_BLOCK_SIZE = 32;
 const BLOCK_SIZE = BLOCK_SIZE_128PX / SCALE_BLOCK_SIZE;
-const DRAWN_BLOCK_SIZE_PX = 20;
+const DRAWN_BLOCK_SIZE_PX = 20 / SCALE_BLOCK_SIZE;
 
 const progress = document.getElementById("progress") as HTMLProgressElement;
 
@@ -71,8 +71,8 @@ export function optimizeAndDraw(
     "2d"
   ) as CanvasRenderingContext2D;
 
-  ogCanvasCtx.scale(1 / SCALE_BLOCK_SIZE, 1 / SCALE_BLOCK_SIZE);
-  optimizedCanvasCtx.scale(1 / SCALE_BLOCK_SIZE, 1 / SCALE_BLOCK_SIZE);
+  // ogCanvasCtx.scale(1 / BLOCK_SIZE, 1 / BLOCK_SIZE);
+  // optimizedCanvasCtx.scale(1 / BLOCK_SIZE, 1 / BLOCK_SIZE);
 
   // render the original map from blocksToOptimize to have all the og blocks with their original sizes
   blocksToOptimize.forEach((block) => {
@@ -91,12 +91,7 @@ export function optimizeAndDraw(
     // draw outline behind the actual block
     ogCanvasCtx.fillStyle = "blue";
 
-    if (
-      scaledX === 0 ||
-      scaledY === 0 ||
-      scaledWidth === 0 ||
-      scaledHeight === 0
-    ) {
+    if (scaledWidth === 0 || scaledHeight === 0) {
       console.log(
         `x: ${x}, y: ${y}, width: ${width}, height: ${height}, scaledX: ${scaledX}, scaledY: ${scaledY}, scaledWidth: ${scaledWidth}, scaledHeight: ${scaledHeight}`
       );

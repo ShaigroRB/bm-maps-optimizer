@@ -3,14 +3,17 @@
 <link rel="icon" type="image/svg+xml" href="/assets/horizontal_icon_32x32.png" />
 <meta charset="utf-8" />
 <style>
-  #og_map_canvas {
-    opacity: 0.05;
-    transition: 0.5s;
+  .disappear {
+    opacity: 0;
+    transition: 0.3s;
   }
 
-  #og_map_canvas:hover {
-    opacity: 1;
-    transition: 0.5s;
+  #optimized_map_canvas {
+    transition: 0.3s;
+  }
+
+  canvas {
+    border: 4mm ridge rgb(144, 139, 249);
   }
 </style>
 <script type="text/javascript">
@@ -40,6 +43,16 @@
 
 <body>
 
+  <section>
+    <h2>Known limitations:</h2>
+    <p>Some blocks are not optimized and have a blue border in the final preview. Those blocks are:</p>
+    <ul>
+      <li>blocks that don't snap to the grid</li>
+      <li>blocks that have a custom size that is not a multiple of the grid size</li>
+      <li>blocks that go out of the visible map</li>
+    </ul>
+    <p>Blocks that overlap with other blocks create more blocks and are not necessarily optimized.</p>
+  </section>
 
   <div>
     <input type="file" id="input_load_file"></input>
@@ -55,10 +68,10 @@
   </div>
 
   <h2>Hover to see non-optimized map</h2>
+  <progress id="progress" value="0" max="100">70 %</progress>
   <div style="position: relative;">
-    <progress id="progress" value="0" max="100">70 %</progress>
-    <canvas id="optimized_map_canvas" style="position: absolute;"></canvas>
     <canvas id="og_map_canvas" style="position: absolute;"></canvas>
+    <canvas id="optimized_map_canvas" style="position: absolute;"></canvas>
   </div>
 
   <script type="module" src="/src/main.ts"></script>
