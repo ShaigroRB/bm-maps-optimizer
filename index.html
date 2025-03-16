@@ -3,6 +3,14 @@
 <link rel="icon" type="image/svg+xml" href="./assets/horizontal_icon_32x32-D8gLmfer.png" />
 <meta charset="utf-8" />
 <style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #progress {
+    display: none;
+  }
+
   .disappear {
     opacity: 0;
     transition: 0.3s;
@@ -14,6 +22,11 @@
 
   canvas {
     border: 4mm ridge rgb(144, 139, 249);
+  }
+
+  .blue {
+    color: blue;
+    font-weight: bold;
   }
 </style>
 <script type="text/javascript">
@@ -39,14 +52,14 @@
     document.body.removeChild(link);
   }
 </script>
-  <script type="module" crossorigin src="./assets/index-BcQV0nQm.js"></script>
+  <script type="module" crossorigin src="./assets/index-Cc4aFkq2.js"></script>
 </head>
 
 <body>
 
   <section>
     <h2>Known limitations:</h2>
-    <p>Some blocks are not optimized and have a blue border in the final preview. Those blocks are:</p>
+    <p>Some blocks are <b>not optimized</b>. They have a <span class="blue">blue border</span> in the final preview. Those blocks are:</p>
     <ul>
       <li>blocks that don't snap to the grid</li>
       <li>blocks that have a custom size that is not a multiple of the grid size</li>
@@ -69,7 +82,9 @@
   </div>
 
   <h2>Hover to see non-optimized map</h2>
-  <progress id="progress" value="0" max="100">70 %</progress>
+  <div id="progress">
+    <img src="./assets/loading-D0X80vKY.svg" />
+  </div>
   <div style="position: relative;">
     <canvas id="og_map_canvas" style="position: absolute;"></canvas>
     <canvas id="optimized_map_canvas" style="position: absolute;"></canvas>
