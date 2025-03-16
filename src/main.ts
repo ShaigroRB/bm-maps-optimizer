@@ -1,6 +1,7 @@
 // import "./style.css";
 import { optimizeAndDraw } from "./drawing/drawing";
 
+const progress = document.getElementById("progress") as HTMLProgressElement;
 const loadMapFile_input = document.getElementById(
   "input_load_file"
 ) as HTMLInputElement;
@@ -34,6 +35,8 @@ loadMapFile_input.addEventListener("change", async () => {
 
   if (!file) return;
 
+  progress.style.display = "block";
+
   const content = await file.text();
   ogLines.push(...content.split("\r\n"));
 
@@ -48,6 +51,7 @@ loadMapFile_input.addEventListener("change", async () => {
     );
     return;
   }
+  progress.style.display = "none";
 
   mapContent.value = optimizedLines.join("\n");
   before_span.textContent = stats["before"].toString();

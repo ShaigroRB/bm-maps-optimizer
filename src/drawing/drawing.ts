@@ -20,8 +20,6 @@ const SCALE_BLOCK_SIZE = 32;
 const BLOCK_SIZE = BLOCK_SIZE_128PX / SCALE_BLOCK_SIZE;
 const DRAWN_BLOCK_SIZE_PX = 20 / SCALE_BLOCK_SIZE;
 
-const progress = document.getElementById("progress") as HTMLProgressElement;
-
 // @ts-ignore -- Useful for debugging
 function printTable(table: number[][]): void {
   let content = "";
@@ -37,7 +35,6 @@ export function optimizeAndDraw(
   optimizedCanvas: HTMLCanvasElement
 ): [string[], Record<string, number | boolean>] {
   console.clear();
-  progress.value = 0;
 
   const originalLines = ogLines;
   const bmapJson = JSON.parse(originalLines[MAP_OBJECTS_INDEX]);
@@ -48,8 +45,6 @@ export function optimizeAndDraw(
     BLOCKS_AND_WALL_NAMES
   );
 
-  progress.value = 5;
-
   const listOfBlocksTable = fromBlocksToListOfBlocksTable(
     _mapWidth,
     _mapHeight,
@@ -58,8 +53,6 @@ export function optimizeAndDraw(
     BLOCKS,
     BLOCK_SIZE
   );
-
-  progress.value = 15;
 
   // set the width and height of the canvas
   ogCanvas.width = (_mapWidth / BLOCK_SIZE) * DRAWN_BLOCK_SIZE_PX;
@@ -122,15 +115,11 @@ export function optimizeAndDraw(
   //   printTable(blocksTable.table);
   // });
 
-  let incr = 80 / listOfBlocksTable.length;
-
   let listOfBlocks: Block[] = [];
 
   listOfBlocksTable.forEach((blocksTable) => {
     const currBlocks = getLeastBlocksFromBlocksTable(blocksTable);
     listOfBlocks = [...listOfBlocks, ...currBlocks];
-
-    progress.value += incr;
 
     currBlocks.forEach((block) => {
       const { x, y, width, height } = block;
@@ -188,8 +177,6 @@ export function optimizeAndDraw(
     optimizedObjectsString,
     originalLines[MAP_OBJECTS_INDEX + 1],
   ];
-
-  progress.value = 100;
 
   return [optimizedLines, stats];
 }
