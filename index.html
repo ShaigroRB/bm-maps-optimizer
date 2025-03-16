@@ -23,6 +23,11 @@
   canvas {
     border: 4mm ridge rgb(144, 139, 249);
   }
+
+  .blue {
+    color: blue;
+    font-weight: bold;
+  }
 </style>
 <script type="text/javascript">
   function JSONdumps(data) {
@@ -53,7 +58,7 @@
 
   <section>
     <h2>Known limitations:</h2>
-    <p>Some blocks are not optimized and have a blue border in the final preview. Those blocks are:</p>
+    <p>Some blocks are <b>not optimized</b>. They have a <span class="blue">blue border</span> in the final preview. Those blocks are:</p>
     <ul>
       <li>blocks that don't snap to the grid</li>
       <li>blocks that have a custom size that is not a multiple of the grid size</li>
